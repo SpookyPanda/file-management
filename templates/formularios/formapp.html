@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block body_block %}
+  {% if registered %}
+   <h1>Se ha registrado exitosamente!</h1>
+    <h3>Ahora puedes <a href="{% url 'login' %}">ingresar</a> :)</h3>
+  {% else %}
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#thismodal">
+      Registrarse
+    </button>
+
+    <div class="modal fade" id="thismodal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h4>por favor llena el formulario</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <div class="modal-body">
+            <div class="container">
+              <div class="jumbotron">
+                <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ user_form.as_p }}
+                  {{ profile_form.as_p }}
+                  <input type="submit" name="" value="Register">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
